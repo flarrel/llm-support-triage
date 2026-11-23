@@ -1,0 +1,10 @@
+[
+  {"id":"KB-01","category":"akun","article":"Sandi akun yang terlupa dapat diubah lewat menu Lupa sandi. Buka tautan pemulihan terbaru yang dikirim ke email akun.","terms":["sandi","password","login","masuk","akun"]},
+  {"id":"KB-02","category":"akun","article":"Ubah alamat email dari Pengaturan Akun. Konfirmasi alamat baru melalui pesan verifikasi sebelum menggunakannya untuk masuk.","terms":["ganti email","ubah email","alamat email","verifikasi email"]},
+  {"id":"KB-03","category":"tagihan","article":"Buka Pengaturan > Tagihan > Riwayat untuk mengunduh faktur. Pilih transaksi yang sesuai dengan periode yang diperlukan.","terms":["faktur","invoice","riwayat tagihan","unduh tagihan"]},
+  {"id":"KB-04","category":"tagihan","article":"Untuk transaksi ganda, catat kedua nomor referensi dan minta tim penagihan memeriksa duplikasi sebelum menyetujui pengembalian dana.","terms":["pembayaran ganda","terdebit dua kali","tagihan dobel","duplikasi","refund"]},
+  {"id":"KB-05","category":"ruang kerja","article":"Undangan baru dikirim dari Pengaturan Ruang Kerja > Anggota. Jika tautan kedaluwarsa, admin harus mengirim ulang undangan.","terms":["undangan","tautan kedaluwarsa","anggota","invite"]},
+  {"id":"KB-06","category":"ruang kerja","article":"Admin dapat mengubah peran melalui Pengaturan Ruang Kerja > Anggota. Peran pembaca hanya bisa melihat konten.","terms":["peran","izin edit","akses anggota","pembaca","admin"]},
+  {"id":"KB-07","category":"ekspor","article":"Buka Laporan > Ekspor dan pilih format CSV. Pilih periode sebelum mengunduh hasilnya.","terms":["csv","ekspor laporan","unduh laporan","format ekspor"]},
+  {"id":"KB-08","category":"ekspor","article":"Jika ekspor berstatus tertunda, periksa status di Laporan > Riwayat Ekspor. Ulangi ekspor hanya setelah status berubah menjadi gagal.","terms":["ekspor tertunda","status ekspor","ekspor gagal","riwayat ekspor"]}
+]
