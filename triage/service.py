@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.error import URLError
 from uuid import uuid4
 
-from triage.pipeline import MODEL, PROMPT_VERSION, Ollama, load_articles, triage
+from triage.pipeline import MODEL, PROMPT_VERSIONS, Ollama, load_articles, triage
 
 EVENT_SCHEMA = """
 CREATE TABLE IF NOT EXISTS runs (
@@ -35,7 +35,7 @@ def serve(database, port, mode, ollama_url):
     with connect(database) as connection:
         connection.executescript(EVENT_SCHEMA)
 
-    model = Ollama(ollama_url) if mode == "v1" else None
+    model = Ollama(ollama_url, constrain_citations=mode == "v2") if mode != "keyword" else None
     articles = load_articles()
     try:
         digest = model.digest() if model else None
@@ -57,7 +57,7 @@ def serve(database, port, mode, ollama_url):
                     "version": mode,
                     "model": MODEL if model else None,
                     "model_digest": digest,
-                    "prompt_version": PROMPT_VERSION if model else None,
+                    "prompt_version": PROMPT_VERSIONS.get(mode),
                 })
             else:
                 self.respond(404, {"error": "not_found"})
@@ -80,7 +80,7 @@ def serve(database, port, mode, ollama_url):
 
             run_id = uuid4().hex
             start = time.perf_counter()
-            result = triage(ticket, articles, model)
+            result = triage(ticket, articles, model, include_aliases=mode == "v2")
             elapsed = (time.perf_counter() - start) * 1000
             with connect(database) as connection, connection:
                 connection.execute(
@@ -101,7 +101,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", required=True, type=Path)
     parser.add_argument("--port", type=int, default=18680)
-    parser.add_argument("--mode", choices=("keyword", "v1"), default="v1")
+    parser.add_argument("--mode", choices=("keyword", "v1", "v2"), default="v2")
     parser.add_argument("--ollama", default="http://127.0.0.1:18634")
     args = parser.parse_args()
     try:

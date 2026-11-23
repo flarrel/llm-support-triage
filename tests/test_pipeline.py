@@ -21,6 +21,13 @@ class PipelineTests(unittest.TestCase):
     def test_match_uses_word_boundaries(self):
         self.assertEqual(context_for("masukan pelanggan", self.articles), [])
 
+    def test_receipt_alias_recovers_diagnosis_case(self):
+        ticket = "Bisa minta kuitansi bulan lalu?"
+        self.assertEqual(context_for(ticket, self.articles), [])
+        context = context_for(ticket, self.articles, include_aliases=True)
+        self.assertEqual([article["id"] for article in context], ["KB-03"])
+        self.assertNotIn("aliases", context[0])
+
     def test_readable_draft_uses_category_from_cited_article(self):
         self.model.generate.return_value = {"citation": "KB-01", "draft": "Gunakan Lupa sandi."}
         result = triage(self.ticket, self.articles, self.model)
@@ -66,6 +73,7 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(route, "/api/chat")
         self.assertFalse(request["stream"])
         self.assertEqual(request["format"]["type"], "object")
+        self.assertEqual(request["format"]["properties"]["citation"]["enum"], ["", "KB-01"])
         self.assertEqual(json.loads(request["messages"][1]["content"]),
                          {"ticket": self.ticket, "references": context})
 
